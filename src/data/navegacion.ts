@@ -8,6 +8,7 @@ export const enlacesPorRol: Record<Rol, EnlaceNavegacion[]> = {
     { ruta: "/gestion/productos", texto: "Productos", icono: "bi-box-seam" },
     { ruta: "/gestion/categorias", texto: "Categorías", icono: "bi-tags" },
     { ruta: "/gestion/compras", texto: "Compras", icono: "bi-receipt" },
+    { ruta: "/gestion/reportes", texto: "Reportes", icono: "bi-graph-up" },
   ],
   vendedor: [
     { ruta: "/gestion/productos", texto: "Stock", icono: "bi-box-seam" },

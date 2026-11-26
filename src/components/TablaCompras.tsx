@@ -1,12 +1,22 @@
-import type { Compra } from "../types/Compra";
+import type { Compra, EstadoCompra } from "../types/Compra";
+import { estadosSiguientes, etiquetaEstado } from "../utils/estadosCompra";
 import { formatearFecha, formatearPrecio } from "../utils/formato";
+import { InsigniaEstado } from "./InsigniaEstado";
 
 interface TablaComprasProps {
   compras: Compra[];
   mostrarCliente?: boolean; // el panel de administración también muestra quién compró
+  // Si se entrega, la tabla muestra un selector para cambiar el estado (solo administrador)
+  onCambiarEstado?: (compra: Compra, estado: EstadoCompra) => void;
+  procesandoId?: number | null; // compra cuyo cambio de estado está en curso
 }
 
-export const TablaCompras = ({ compras, mostrarCliente = false }: TablaComprasProps) => {
+export const TablaCompras = ({
+  compras,
+  mostrarCliente = false,
+  onCambiarEstado,
+  procesandoId = null,
+}: TablaComprasProps) => {
   return (
     <div className="table-responsive card border-0 shadow-sm">
       <table className="table table-hover align-middle mb-0">
@@ -16,6 +26,7 @@ export const TablaCompras = ({ compras, mostrarCliente = false }: TablaComprasPr
             <th>Fecha</th>
             {mostrarCliente && <th>Cliente</th>}
             <th>Productos</th>
+            <th>Estado</th>
             <th className="text-end">Total</th>
           </tr>
         </thead>
@@ -40,6 +51,27 @@ export const TablaCompras = ({ compras, mostrarCliente = false }: TablaComprasPr
                     </li>
                   ))}
                 </ul>
+              </td>
+              <td>
+                <InsigniaEstado estado={compra.estado} />
+                {onCambiarEstado && estadosSiguientes[compra.estado].length > 0 && (
+                  <select
+                    className="form-select form-select-sm mt-2"
+                    value=""
+                    disabled={procesandoId === compra.id}
+                    aria-label={`Cambiar el estado de la compra #${compra.id}`}
+                    onChange={(e) => onCambiarEstado(compra, e.target.value as EstadoCompra)}
+                  >
+                    <option value="" disabled>
+                      Cambiar estado...
+                    </option>
+                    {estadosSiguientes[compra.estado].map((estado) => (
+                      <option key={estado} value={estado}>
+                        {etiquetaEstado[estado]}
+                      </option>
+                    ))}
+                  </select>
+                )}
               </td>
               <td className="text-end fw-bold">{formatearPrecio(compra.total)}</td>
             </tr>

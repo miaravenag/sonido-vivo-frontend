@@ -68,6 +68,11 @@ src/
   el backend está apagado o responde con error.
 - **Historial de compras**: `/historial` (cada usuario ve sus compras) y `/gestion/compras` (el administrador ve las
   de todos los clientes). Al finalizar la compra se envía `POST /compras`.
+- **Estado de las compras**: cada compra tiene un estado (`Pendiente`, `En preparación`, `Enviada`, `Entregada`,
+  `Cancelada`) que se ve en el historial del cliente. El administrador lo cambia desde `/gestion/compras`
+  (`PATCH /compras/{id}/estado`); al cancelar se devuelve el stock.
+- **Reportes**: `/gestion/reportes` (solo administrador) muestra el dashboard con tarjetas, gráfico de barras y
+  tabla de productos más vendidos, por semana, mes, año o todo el historial (`GET /reportes/resumen`).
 
 ## Roles
 
@@ -90,6 +95,8 @@ Cuentas de demostración (las crea el backend la primera vez que arranca con la 
 | CRUD de categorías | ✔ | — | — |
 | Ver su historial de compras | ✔ | ✔ | ✔ |
 | Ver el historial de todas las compras | ✔ | — | — |
+| Cambiar el estado de una compra | ✔ | — | — |
+| Ver el dashboard de reportes | ✔ | — | — |
 
 El registro público (`/registro`) siempre crea clientes. Las rutas `/perfil`, `/historial` y `/gestion/*` están
 protegidas con `components/RutaProtegida.tsx`, y el backend (Spring Security) valida el token y el rol en cada endpoint.

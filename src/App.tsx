@@ -13,6 +13,7 @@ import { GestionUsuarios } from "./pages/GestionUsuarios";
 import { Login } from "./pages/Login";
 import { Perfil } from "./pages/Perfil";
 import { Registro } from "./pages/Registro";
+import { Reportes } from "./pages/Reportes";
 import { ROLES } from "./utils/permisos";
 
 function App() {
@@ -45,6 +46,7 @@ function App() {
         <Route element={<RutaProtegida roles={["administrador"]} />}>
           <Route path="/gestion/categorias" element={<GestionCategorias />} />
           <Route path="/gestion/compras" element={<GestionCompras />} />
+          <Route path="/gestion/reportes" element={<Reportes />} />
         </Route>
       </Route>
 

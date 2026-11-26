@@ -1,3 +1,5 @@
+export type EstadoCompra = "PENDIENTE" | "EN_PREPARACION" | "ENVIADA" | "ENTREGADA" | "CANCELADA";
+
 export interface DetalleCompra {
   productoId: number;
   nombreProducto: string;
@@ -10,6 +12,7 @@ export interface Compra {
   id: number;
   fecha: string; // ISO, ej. 2026-11-16T14:30:00
   total: number;
+  estado: EstadoCompra;
   clienteId: number;
   clienteNombre: string;
   clienteEmail: string;

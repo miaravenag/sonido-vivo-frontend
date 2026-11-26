@@ -1,5 +1,5 @@
 import { api } from "../api/axiosConfig";
-import type { Compra, ItemCompra } from "../types/Compra";
+import type { Compra, EstadoCompra, ItemCompra } from "../types/Compra";
 
 export const compraService = {
   async crear(items: ItemCompra[]): Promise<Compra> {
@@ -16,6 +16,12 @@ export const compraService = {
   // Historial de todos los clientes (solo administrador)
   async obtenerTodas(): Promise<Compra[]> {
     const respuesta = await api.get<Compra[]>("/compras");
+    return respuesta.data;
+  },
+
+  // Cambia el estado de una compra (solo administrador)
+  async actualizarEstado(id: number, estado: EstadoCompra): Promise<Compra> {
+    const respuesta = await api.patch<Compra>(`/compras/${id}/estado`, { estado });
     return respuesta.data;
   },
 };
